@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import connectDB from './database/dbconnection.js';
 dotenv.config();
 
 const app=express();
@@ -19,6 +20,8 @@ app.use(morgan("dev"));
 app.use(helmet({
     crossOriginResourcePolicy:false
 }));
+
+connectDB();
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server is running on port ${process.env.PORT }`);
