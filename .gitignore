@@ -1,3 +1,18 @@
-./Backend/node_modules/
-./Fronrend/node_modules/
-./Backend/.env
+# Ignore node_modules from both frontend and backend
+Backend/node_modules/
+Frontend/node_modules/
+
+# Ignore backend .env file
+Backend/.env
+
+# Optional: ignore other OS and editor specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional: ignore environment files for safety
+*.env
