@@ -24,7 +24,11 @@ const addressSchema=new mongoose.Schema({
     mobile:{
         type:Number,
         default:null
-    }
+    },
+    status:{
+        type:Boolean,
+        default:true
+    },
 },{timestamps:true});
 
 const AddressModel=mongoose.model("address", addressSchema);
