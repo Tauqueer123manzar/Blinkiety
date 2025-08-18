@@ -1,5 +1,5 @@
 import User from "../model/UserModel";
-
+import bcryptjs from "bcryptjs";
 // =========================== register user ===========================
 export const registerUser=async(req,res)=>{
     try {
@@ -17,17 +17,19 @@ export const registerUser=async(req,res)=>{
                 message:"User already exists with this email"
             });
         }
+        const salt=await bcryptjs.genSalt(10);
+        const hashedPassword=await bcryptjs.hash(password,salt);
         const newUser=new User({
             name,
             email,
-            password
+            password: hashedPassword
         });
         await newUser.save();
         return res.status(201).json({
             success:true,
             message:"User registered successfully",
             user:newUser
-        });
+        });    
     } catch (error) {
         console.error("Error registering user:",error);
         return res.status(500).json({
@@ -37,4 +39,5 @@ export const registerUser=async(req,res)=>{
         });
     }
 };
+
 
