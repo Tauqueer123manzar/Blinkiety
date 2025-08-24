@@ -40,4 +40,41 @@ export const registerUser=async(req,res)=>{
     }
 };
 
-
+// =========================================== login user ==================================
+export const loginUser=async(req,res)=>{
+    try{
+        const{email,password}=req.body;
+        if(!email || !password){
+            return res.status(400).json({
+                success:false,
+                message:"Please provide all required fields"
+            });
+        }
+        const user=await User.findOne({email});
+        if(!user){
+            return res.status(400).json({
+                success:false,
+                message:"Invalid email or password"
+            });
+        }
+        const isMatch=await bcryptjs.compare(password,user.password);
+        if(!isMatch){
+            return res.status(400).json({
+                success:false,
+                message:"Invalid email or password"
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            message:"User logged in successfully",
+            user
+        });
+    }catch(error){
+        console.error("Error logging in user:",error);
+        return res.status(500).json({
+            success:false,
+            message:"Internal server error",
+            error:error.message
+        });
+    }
+}
